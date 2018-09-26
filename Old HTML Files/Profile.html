@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SWAP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="themes/food.min.css" />
+        <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+        <style type="text/css">
+            body {
+                background: url(wood.jpg);
+                background-repeat:repeat-y;
+                background-position:center center;
+                background-attachment:scroll;
+                background-size:100% 100%;
+            }
+            .ui-page {
+                background: transparent;
+            }
+            .ui-content{
+                background: transparent;
+            }
+
+            .ui-content : .goals{
+                background: url(goals.png);
+            }
+
+            .ui-button : .goals{
+                background: url(goals.png);
+            }
+
+            .title{
+                text-align: center;
+                background-color: #4d4d4d;
+                width: 100%;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+         <!-- /Recipes-->
+        <!-- /Friends-->
+        <div data-role="page" id="Profile" data-theme="a">
+
+            <div data-role="header">
+                <h1>Profile</h1>
+            </div><!-- /header-->
+
+            <div role="content" class="ui-content">
+                <h1 class="title">My Friends</h1>
+                <ul data-role="listview" data-filter="true" data-filter-placeholder="Search friends..." data-inset="true">
+                      <li><a href="#">Friend 1</a></li>
+                      <li><a href="#">Friend 2</a></li>
+                      <li><a href="#">Friend 3</a></li>
+                      <li><a href="#">Friend 4</a></li>
+                      <li><a href="#">Friend 5</a></li>
+                </ul><!--/content-->
+
+            </div>
+          
+            <div data-role="footer">
+                    <div data-role="navbar" ">
+                        <ul>
+                            <li> <a href="Home.html" data-transition="flow" data-icon="home" >Home</a></li>
+                            <li> <a href="Goals.html" data-transition="flow" data-icon="goals" id="goals">Goals</a></li>
+                            <li> <a href="List.html" data-transition="flow" data-icon="bullets">List</a></li>
+                            <li> <a href="Recipes.html" data-transition="flow" data-icon="?">Recipes</a></li>
+                            <li> <a href="Profile.html" data-transition="flow" data-icon="?" class="ui-btn-active ui-state-persist ui-state-disabled">Profile</a></li>
+
+                        </ul>
+                    </div>
+          </div><!-- /footer -->
+        </div><!-- /page -->
+
+
+      
+
+    </body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SWAP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="themes/food.min.css" />
+        <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+        <style type="text/css">
+            body {
+                background: url(wood.jpg);
+                background-repeat:repeat-y;
+                background-position:center center;
+                background-attachment:scroll;
+                background-size:100% 100%;
+            }
+            .ui-page {
+                background: transparent;
+            }
+            .ui-content{
+                background: transparent;
+            }
+
+            .title{
+                text-align: center;
+                background-color: #4d4d4d;
+                width: 100%;
+            }
+
+            #goals-ic{
+                background: url("goals-white.png") no-repeat;
+                background-position: 50% 24%;
+                background-size: 19px 19px;
+            }
+
+            #recipes-ic{
+                background: url("recipes-white.png") no-repeat;
+                background-position: 50% 24%;
+                background-size: 19px 19px;
+            }
+
+            #community-ic{
+                background: url("community-white.png") no-repeat;
+                background-position: 50% 24%;
+                background-size: 19px 19px;
+            }
+
+            .footer-icon{
+              background-color: transparent !important;
+            }
+
+/* Goals + Recipes CSS */
+
+
+        .h1 .span{
+            display: inline-block;
+            float: left;
+        }
+
+        .topper{
+            display: inline-block;
+        }
+
+
+        /* Recipe List */
+        #myInput {
+            background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+            background-position: 10px 12px; /* Position the search icon */
+            background-repeat: no-repeat; /* Do not repeat the icon image */
+            width: 100%; /* Full-width */
+            font-size: 16px; /* Increase font-size */
+            padding: 12px 20px 12px 40px; /* Add some padding */
+            border: 1px solid #ddd; /* Add a grey border */
+            margin-bottom: 12px; /* Add some space below the input */
+        }
+
+        #myUL {
+            /* Remove default list styling */
+            list-style-type: none;
+            padding: 0;
+            margin: 2px;
+        }
+
+        #myUL li a {
+            border: 1px solid #ddd; /* Add a border to all links */
+            margin-top: -1px; /* Prevent double borders */
+            background-color: #eee; /* Grey background color */
+            margin-left: 10px
+            padding: 12px; /* Add some padding */
+            text-decoration: none; /* Remove default text underline */
+            font-size: 18px; /* Increase the font-size */
+            color: black; /* Add a black text color */
+            display: block; /* Make it into a block element to fill the whole list */
+        }
+
+        #myUL li a:hover:not(.header) {
+            background-color: green; /* Add a hover effect to all links, except for headers */
+        }
+
+        #myInput{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+/* Recipes CSS */
+
+        /* Filer icon  */
+        .container {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .bar1{
+            position: absolute;
+            top: 80px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .bar2{
+            position: absolute;
+            top: 70px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .bar3{
+            position: absolute;
+            top: 90px;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .bar1, .bar2, .bar3 {
+            width: 35px;
+            height: 5px;
+            background-color: white;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        /* Rotate first bar */
+        .change .bar1 {
+            -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+            transform: rotate(-45deg) translate(-9px, 6px) ;
+            background-color: red;
+        }
+
+        /* Fade out the second bar */
+        .change .bar2 {
+            opacity: 0;
+        }
+
+        /* Rotate last bar */
+        .change .bar3 {
+            -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+            transform: rotate(45deg) translate(-8px, -8px) ;
+            background-color: red;
+        }
+
+        .page-header{
+            display: inline-block;
+        }
+
+
+
+
+
+         /* The side navigation menu */
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: inline-block;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+}
+
+
+
+        </style>
+
+<!-- script for recipes -->
+        <script>
+
+            /*For recipe ist  */
+            function recipeList() {
+                // Declare variables
+                var input, filter, ul, li, a, i;
+                input = document.getElementById('myInput');
+                filter = input.value.toUpperCase();
+                ul = document.getElementById("myUL");
+                li = ul.getElementsByTagName('li');
+
+                // Loop through all list items, and hide those who don't match the search query
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
+                }
+            }
+
+
+
+
+            /*Use for filter bar  */
+            function animation(x) {
+                x.classList.toggle("change");
+                openNav();
+            }
+
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+
+
+
+        </script>
+
+    </head>
+
+    <body>
+
+    <!-- Start of home page -->
+    <div data-role="page" id="home" data-theme="a">
+
+      <div data-role="header" >
+        <h1>SWAP</h1>
+        <a href=# data-icon="gear" class="ui-btn-right" style="padding: 15px 15px"></a>
+      </div><!-- /header -->
+
+      <div data-role="content">
+        <h1>Welcome back, Maya.</h1>
+        <img src=points.png width=300px style="padding: 30px;">
+        <img src=platestore.png width=43% style="padding: 10px;">
+        <img src=platebudget.png width=43% style="padding: 10px;">
+        <img src=platehistory.png width=43% style="padding: 10px;">
+        <img src=platefact.png width=43% style="padding: 10px;">
+
+      </div><!-- /content -->
+
+        <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" class = "nav-custom" >
+                    <ul>
+                        <li> <a href="#home" class="footer-icon" data-transition="slide" id="home-ic" data-icon="home">Home</a></li>
+                        <li> <a href="#goals" class="footer-icon" data-transition="slide" id= "goals-ic" data-icon="custom" >Goals</a></li>
+                        <li> <a href="List.html" class="footer-icon" data-transition="slide" data-icon="bullets">List</a></li>
+                        <li> <a href="#recipes" class="footer-icon" data-transition="slide" id="recipes-ic" data-icon="custom">Recipes</a></li>
+                        <li> <a href="#community" class="footer-icon" id="community-ic" data-transition="slide" id="community-ic" data-icon="custom">Community</a></li>
+
+                    </ul>
+                </div>
+      </div><!-- /footer -->
+
+    </div><!-- /page -->
+
+    <!-- Start of goals page -->
+    <div data-role="page" id="goals" data-theme="a">
+
+     <div data-role="header">
+       <h1>SWAP</h1>
+     </div><!-- /header -->
+
+     <div role="content" class="ui-content">
+       <h1 class="title">This Week's Goals</h1>
+        <ul data-role="listview" id="myUL">
+
+            <li >
+                <a href="#goal1" class="ui-link-inherit">
+                    <img src="Budget.png">
+                    <h3 class="ui-li-heading">Save 10% of your weekly budget</h3>
+                    <!--<span class="ui-li-aside"><img src="leaficon.png" height=17px width=17px>50</span>-->
+                    <p class="ui-li-desc"><img src="leaficon.png" height=17px width=17px>50</p>
+                </a>
+
+            </li>
+
+             <li >
+                <a href="#goal2" class="ui-link-inherit">
+                    <img src="Swaps.png ">
+                    <h3 class="ui-li-heading">Swap 5 items</h3>
+                    <!--<span class="ui-li-aside"><img src="leaficon.png" height=17px width=17px>25</span>-->
+                    <p class="ui-li-desc"><img src="leaficon.png" height=17px width=17px>25</p>
+                </a>
+            </li>
+
+            <li >
+                <a href="#goal3" class="ui-link-inherit">
+                    <img src="Complete.png" >
+                    <h3 class="ui-li-heading">Set your budget</h3>
+                    <!--<span class="ui-li-aside"><img src="leaficon.png" height=17px width=17px>10</span>-->
+                    <p class="ui-li-desc"><img src="leaficon.png" height=17px width=17px>10</p>
+                </a>
+            </li>
+
+      </ul>
+
+      <a href="#goals_input" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus" style="width: 175px;"> Add new goal</a>
+
+      </div><!-- /content -->
+
+      <div data-role="footer" data-position="fixed">
+              <div data-role="navbar" class = "nav-custom" >
+                  <ul>
+                        <li> <a href="#home" class="footer-icon" data-transition="slide" id="home-ic" data-icon="home">Home</a></li>
+                        <li> <a href="#goals" class="footer-icon" data-transition="slide" id= "goals-ic" data-icon="custom" >Goals</a></li>
+                        <li> <a href="#list" class="footer-icon" data-transition="slide" data-icon="bullets">List</a></li>
+                        <li> <a href="#recipes" class="footer-icon" data-transition="slide" id="recipes-ic" data-icon="custom">Recipes</a></li>
+                        <li> <a href="#community" class="footer-icon" id="community-ic" data-transition="slide" id="community-ic" data-icon="custom">Community</a></li>
+                  </ul>
+              </div>
+    </div><!-- /footer -->
+
+  </div><!-- /page -->
+
+  <!-- Start of list page -->
+
+
+  <!-- Start of recipes page -->
+  <div data-role="page" id="recipes" data-theme="a">
+
+    <div data-role="header">
+      <h1>SWAP</h1>
+    </div><!-- /header -->
+
+
+  <div data-role="content">
+
+      <div id="page-header">
+        <h1 class="title">Recipes</h1>
+
+          <div  style="font-size:30px;cursor:pointer"  onclick="animation(this)" id="bar">
+
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+
+          </div>
+      </h1>
+      </div>
+
+      <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="#">Search Recipes</a>
+                        <a href="#">Saved Recipes</a>
+                        <a href="#">Friend's Recipes</a>
+                        <a href="#">Create Recipe</a>
+      </div>
+
+
+    <input type="text" id="myInput" onkeyup="recipeList()" placeholder="Search for recipes..">
+
+       <div data-role="collapsible">
+          <h3>Select Diet Type</h3>
+          <p>All</p>
+          <p>Vegetarian</p>
+          <p>Pescatarian</p>
+          <p>Vegan</p>
+      </div>
+      <ul data-role="listview" id="myUL">
+
+          <li >
+              <a href="#stew" class="ui-link-inherit">
+                  <img src="PotatoStew.jpg">
+                  <h3 class="ui-li-heading">Potato Stew</h3>
+                  <p class="ui-li-desc">Status description</p>
+                  <span class="ui-li-aside">$221</span>
+              </a>
+
+
+          </li>
+
+           <li >
+              <a href="#mushrooms" class="ui-link-inherit">
+                  <img src="StuffedPortobelloMushroom.jpg ">
+                  <h3 class="ui-li-heading">Stuffed Portobello Mushroom</h3>
+                  <p class="ui-li-desc">Status description</p>
+              </a>
+          </li>
+
+          <li >
+              <a href="#chile" class="ui-link-inherit">
+                  <img src="ChileRelleno3.jpg" >
+                  <h3 class="ui-li-heading">Chile Relleno</h3>
+                  <p class="ui-li-desc">Status description</p>
+              </a>
+          </li>
+
+          <li >
+              <a href="#tofu" class="ui-link-inherit">
+                  <img src="TofuBreakfastBurrito.jpg" >
+                  <h3 class="ui-li-heading">Tofu Breakfast Burrito</h3>
+                  <p class="ui-li-desc">Status description</p>
+              </a>
+          </li>
+
+    </ul>
+
+
+
+    </div><!-- /content -->
+    <div data-role="footer" data-position="fixed">
+            <div data-role="navbar" class = "nav-custom" >
+                <ul>
+                        <li> <a href="#home" class="footer-icon" data-transition="slide" id="home-ic" data-icon="home">Home</a></li>
+                        <li> <a href="#goals" class="footer-icon" data-transition="slide" id= "goals-ic" data-icon="custom" >Goals</a></li>
+                        <li> <a href="List.html" class="footer-icon" data-transition="slide" data-icon="bullets">List</a></li>
+                        <li> <a href="#recipes" class="footer-icon" data-transition="slide" id="recipes-ic" data-icon="custom">Recipes</a></li>
+                        <li> <a href="#community" class="footer-icon" id="community-ic" data-transition="slide" id="community-ic" data-icon="custom">Community</a></li>
+
+                </ul>
+            </div>
+  </div><!-- /footer -->
+
+</div><!-- /page -->
+
+<!-- start of goals input -->
+<div data-role="page" id="goals_input" data-theme="a">
+
+    <div data-role="header">
+        <h1>SWAP</h1>
+    </div>
+
+  <div role="content" class="ui-content">
+    <h1 class="title">Create a Goal</h1>
+      <form class="ui-body ui-body-a ui-corner-all" id="create_goal" >
+          <fieldset>
+            <div data-role="fieldcontain">
+              <label>Goal Title: </label><input type="text" name="goal_title"><br>
+                <label for="goal_category">Goal Category:</label>
+                <select name="category">
+                  <option value="make">Make</option>
+                  <option value="save">Save</option>
+                  <option value="swap">Swap</option>
+                </select><br>
+                <label for="goal_category">End Date:</label><input type="date">
+              </div>
+
+              <div class="ui-grid-b">
+                <div class="ui-block-a">
+                  <button type="submit" data-theme="a" name="submit">Submit</button>
+                </div>
+
+                <div class="ui-block-b"><a href="#goals_input" class="ui-btn ui-shadow ui-corner-all">Cancel</a></div>
+                </div>
+            </fieldset>
+          </form>
+      </div>
+
+       <div data-role="footer" data-position="fixed">
+            <div data-role="navbar" class = "nav-custom" >
+                <ul>
+                        <li> <a href="#home" class="footer-icon" data-transition="slide" id="home-ic" data-icon="home">Home</a></li>
+                        <li> <a href="#goals" class="footer-icon" data-transition="slide" id= "goals-ic" data-icon="custom" >Goals</a></li>
+                        <li> <a href="List.html" class="footer-icon" data-transition="slide" data-icon="bullets">List</a></li>
+                        <li> <a href="#recipes" class="footer-icon" data-transition="slide" id="recipes-ic" data-icon="custom">Recipes</a></li>
+                        <li> <a href="#community" class="footer-icon" id="community-ic" data-transition="slide" id="community-ic" data-icon="custom">Community</a></li>
+
+                </ul>
+            </div>
+
+        </div> <!-- /footer -->
+      </div> <!-- /page -->
+
+
+
+
+  <!-- Start of community page -->
+  <div data-role="page" id="community" data-theme="a">
+
+   <div data-role="header">
+     <h1>SWAP</h1>
+   </div><!-- /header -->
+
+   <div role="content" class="ui-content">
+     <h1 class="title">Community</h1>
+      <ul data-role="listview" id="myUL">
+
+          <li>
+              <a href="#friend1" class="ui-link-inherit">
+                  <img src="">
+                  <h3 class="ui-li-heading">Sophia</h3>
+                  <span class="ui-li-aside">16 mins</span>
+                  <p class="ui-li-desc">Shared a coupon for <b>Wegmans Natick</b>.</p>
+              </a>
+
+          </li>
+
+           <li>
+              <a href="#friend2" class="ui-link-inherit">
+                  <img src="">
+                  <h3 class="ui-li-heading">Noah</h3>
+                  <span class="ui-li-aside">42 mins</span>
+                  <p class="ui-li-desc">Created a new <b>Grocery List</b>.</p>
+              </a>
+          </li>
+
+          <li>
+              <a href="#friend3" class="ui-link-inherit">
+                  <img src="" >
+                  <h3 class="ui-li-heading">Luna</h3>
+                  <span class="ui-li-aside">2 hrs</span>
+                  <p class="ui-li-desc">Favorited a recipe for <b>Vegan Enchiladas.</b></p>
+              </a>
+          </li>
+
+          <li>
+              <a href="#friend4" class="ui-link-inherit">
+                  <img src="">
+                  <h3 class="ui-li-heading">Eli</h3>
+                  <span class="ui-li-aside">3 hrs</span>
+                  <p class="ui-li-desc">Favorited a recipe for <b>Eggplant Parmesan</b>.</p>
+              </a>
+          </li>
+
+          <li>
+              <a href="#friend5" class="ui-link-inherit">
+                  <img src="">
+                  <h3 class="ui-li-heading">Alex</h3>
+                  <span class="ui-li-aside">5 hrs</span>
+                  <p class="ui-li-desc">Created a recipe for <b>Banana Nut Pancakes</b>.</p>
+              </a>
+          </li>
+
+    </ul>
+
+    </div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed">
+            <div data-role="navbar" class = "nav-custom" >
+                <ul>
+                        <li> <a href="#home" class="footer-icon" data-transition="slide" id="home-ic" data-icon="home">Home</a></li>
+                        <li> <a href="#goals" class="footer-icon" data-transition="slide" id= "goals-ic" data-icon="custom" >Goals</a></li>
+                        <li> <a href="List.html" class="footer-icon" data-transition="slide" data-icon="bullets">List</a></li>
+                        <li> <a href="#recipes" class="footer-icon" data-transition="slide" id="recipes-ic" data-icon="custom">Recipes</a></li>
+                        <li> <a href="#community" class="footer-icon" id="community-ic" data-transition="slide" id="community-ic" data-icon="custom">Community</a></li>
+
+                </ul>
+            </div>
+  </div><!-- /footer -->
+
+</div><!-- /page -->
+
+    </body>
+
+    <script src="food.js"></script>
+
+</html>

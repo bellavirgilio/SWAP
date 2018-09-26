@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SWAP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="themes/food.min.css" />
+        <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+        <style type="text/css">
+            body {
+                background: url(wood.jpg);
+                background-repeat:repeat-y;
+                background-position:center center;
+                background-attachment:scroll;
+                background-size:100% 100%;
+            }
+            .ui-page {
+                background: transparent;
+            }
+            .ui-content{
+                background: transparent;
+            }
+
+            .title{
+                text-align: center;
+                background-color: #4d4d4d;
+                width: 100%;
+            }
+            #goals-ic{
+                background: url("goals.png") no-repeat;
+                background-position: top center;
+            }
+
+            #recipes-ic{
+                background: url("recipes.png") no-repeat;
+                background-position: top center;
+            }
+
+            #community-ic{
+                background: url("community.png") no-repeat;
+                background-position: top center;
+            }
+
+
+                        .h1 .span{
+                            display: inline-block;
+                            float: left;
+                        }
+
+                        .topper{
+                            display: inline-block;
+                        }
+
+
+
+
+                        /* Recipe List */
+                        #myInput {
+                            background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+                            background-position: 10px 12px; /* Position the search icon */
+                            background-repeat: no-repeat; /* Do not repeat the icon image */
+                            width: 100%; /* Full-width */
+                            font-size: 16px; /* Increase font-size */
+                            padding: 12px 20px 12px 40px; /* Add some padding */
+                            border: 1px solid #ddd; /* Add a grey border */
+                            margin-bottom: 12px; /* Add some space below the input */
+                        }
+
+                        #myUL {
+                            /* Remove default list styling */
+                            list-style-type: none;
+                            padding: 0;
+                            margin: 2px;
+                        }
+
+                        #myUL li a {
+                            border: 1px solid #ddd; /* Add a border to all links */
+                            margin-top: -1px; /* Prevent double borders */
+                            background-color: #eee; /* Grey background color */
+                            margin-left: 10px
+                            padding: 12px; /* Add some padding */
+                            text-decoration: none; /* Remove default text underline */
+                            font-size: 18px; /* Increase the font-size */
+                            color: black; /* Add a black text color */
+                            display: block; /* Make it into a block element to fill the whole list */
+                        }
+
+                        #myUL li a:hover:not(.header) {
+                            background-color: green; /* Add a hover effect to all links, except for headers */
+                        }
+
+                        #myInput{
+                            margin-top: 0;
+                            margin-bottom: 0;
+                        }
+
+        </style>
+
+    </head>
+
+    <body>
+      <div data-role="page" id="goals" data-theme="a">
+
+       <div data-role="header">
+         <h1>SWAP</h1>
+       </div><!-- /header -->
+
+       <div role="content" class="ui-content">
+         <h1 class="title">This Week's Goals</h1>
+          <ul data-role="listview" id="myUL">
+
+              <li >
+                  <a href="#goal1" class="ui-link-inherit">
+                      <img src="Budget.png">
+                      <h3 class="ui-li-heading">Save 10% of your weekly budget</h3>
+                      <!--<span class="ui-li-aside"><img src="leaficon.png" height=17px width=17px>50</span>-->
+                      <p class="ui-li-desc"><img src="leaficon.png" height=17px width=17px>50</p>
+                  </a>
+
+              </li>
+
+               <li >
+                  <a href="#goal2" class="ui-link-inherit">
+                      <img src="Swaps.png ">
+                      <h3 class="ui-li-heading">Swap 5 items</h3>
+                      <!--<span class="ui-li-aside"><img src="leaficon.png" height=17px width=17px>25</span>-->
+                      <p class="ui-li-desc"><img src="leaficon.png" height=17px width=17px>25</p>
+                  </a>
+              </li>
+
+              <li >
+                  <a href="#goal3" class="ui-link-inherit">
+                      <img src="Complete.png" >
+                      <h3 class="ui-li-heading">Set your budget</h3>
+                      <!--<span class="ui-li-aside"><img src="leaficon.png" height=17px width=17px>10</span>-->
+                      <p class="ui-li-desc"><img src="leaficon.png" height=17px width=17px>10</p>
+                  </a>
+              </li>
+
+        </ul>
+
+        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus" style="width: 175px;">
+            Add new goal
+        </button>
+
+        </div><!-- /content -->
+
+        <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" class = "nav-custom" data-theme ="grid">
+                    <ul>
+                        <li> <a href="#home"  data-transition="slide" id= "home-ic" data-icon="home" >Home</a></li>
+                        <li> <a href="Goals.html" class="ui-btn-active ui-state-persist ui-state-disabled" id="goals-ic" data-icon="custom">
+                                Goals
+                            </a>
+                        </li>
+                        <li> <a href="List.html" data-transition="slide" data-icon="bullets">List</a></li>
+                        <li> <a href="Recipes.html" data-transition="slide" id="recipes-ic" data-icon="custom">Recipes</a></li>
+                        <li> <a href="Community.html" id="community-ic" data-transition="slide" data-icon="custom">Community</a></li>
+
+                    </ul>
+                </div>
+            </div><!-- /footer -->
+        </div><!-- /page -->
+        </body>
+</html>
